@@ -1,0 +1,36 @@
+<script>
+["SW_SECURE_CRYPTO", "SW_SECURE_DECODE", "HW_SECURE_CRYPTO", "HW_SECURE_DECODE", "HW_SECURE_ALL"].forEach((robustness) => {
+
+navigator.requestMediaKeySystemAccess("com.widevine.alpha", [
+  {
+    "initDataTypes": [
+      "cenc"
+    ],
+    "persistentState": "optional",
+    "distinctiveIdentifier": "optional",
+    "sessionTypes": [
+      "temporary"
+    ],
+    "audioCapabilities": [
+      {
+        "robustness": "SW_SECURE_CRYPTO",
+        "contentType": "audio/mp4;codecs=\"mp4a.40.2\""
+      }
+    ],
+    "videoCapabilities": [
+      {
+        "robustness": robustness,
+        "contentType": "video/mp4;codecs=\"avc1.42E01E\""
+      }
+    ]
+  }
+])
+.then(function (mediaKeySystemAccess) {
+        document.write(robustness + "<br>");
+        })
+.catch(function (e) {
+        document.write(robustness + " failed<br>");
+        });
+
+})
+</script>
